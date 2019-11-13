@@ -1,0 +1,78 @@
+.wrapper {
+  max-width: 1300px;
+  margin: 0 auto;
+
+  text-align: center;
+  vertical-align: middle;
+}
+
+.keyboard {
+  margin-top: 30px;
+  width: 1050px;
+  height: 380px;
+  background: #ffe680;
+  border: 1px solid black;
+  display: inline-block;
+
+  -webkit-box-shadow: 0px 10px 35px 0px rgba(48,54,156,1);
+  -moz-box-shadow: 0px 10px 35px 0px rgba(48,54,156,1);
+  box-shadow: 0px 10px 35px 0px rgba(48,54,156,1);
+}
+
+.text-area {
+  font-size: 18px;
+  width: 700px;
+  height: 400px;
+  background: #e6fff2;
+  /* text-align: center; */
+  resize: none;
+
+  display: inline-block;
+
+  -webkit-box-shadow: inset 0px 10px 30px 0px rgba(0,0,0,0.55);
+  -moz-box-shadow: inset 0px 10px 30px 0px rgba(0,0,0,0.55);
+  box-shadow: inset 0px 10px 30px 0px rgba(0,0,0,0.55);
+}
+
+.row4 .button3 {
+  width: 166px;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  min-width: 40px;
+  height: 40px;
+  padding: 10px;
+  margin: 3px;
+  border: 1px solid black;
+  display: inline-block;
+  background: gray;
+  border-radius: 5px;
+}
+
+@font-face {
+  font-family: 'Lucida Sans';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Lucida Sans'), url('../assets/fonts/LucidaSans.woff'), format('woff');
+}
+.black{
+  background-color: rgba(255, 0, 0, 0.6);;
+  opacity: 50%;
+}
+
+.button:active {
+  background-color: rgba(255, 0, 0, 0.6);;
+  opacity: 50%;
+  transform: scale(2, 2);
+  transition: 0.3s ease;
+}
+
+* {
+  font-family: 'Lucida Sans', Tahoma, sans-serif;
+}
