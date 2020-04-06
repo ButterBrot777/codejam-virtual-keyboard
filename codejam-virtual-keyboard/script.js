@@ -1,7 +1,7 @@
 const wrapper = document.createElement('div');
       keyboard = document.createElement('div');
       row = document.createElement('div');
-      botton = document.createElement('div');
+      botton = document.createElement('button');
       textArea = document.createElement('textarea');
 
 wrapper.classList.add('wrapper');
@@ -21,8 +21,10 @@ const buttonContentEnDownCase =
   ['`','1','2','3','4','5','6','7','8','9','0','-','=','delete'],
   ['tab','q','w','e','r','t','y','u','i','o','p','[',']','\\'],
   ['caps lock','a','s','d','f','g','h','j','k','l',';','\'','enter'],
-  ['shift','z','x','c','v','b','n','m',',','.','/','▲','shift right'],
-  ['control','option','command','space','command','option','◄','▼','►']
+  ['shift','z','x','c','v','b','n','m',',','.','/','shift right'],
+  ['lang', 'control','option','command','space','command','option','←','↓','→'],
+  ['↑'],
+
 ];
 
 const buttonContentEnUpperCase = 
@@ -31,8 +33,9 @@ const buttonContentEnUpperCase =
   ['~','!','@','#','$','%','^','&','*','(',')','_','+','delete'],
   ['tab','Q','W','E','R','T','Y','U','I','O','P','{','}','|'],
   ['caps lock','A','S','D','F','G','H','J','K','L',':','\"','enter'],
-  ['shift','Z','X','C','V','B','N','M','<','>','?','▲','shift right'],
-  ['control','option','command','space','command','option','◄','▼','►']
+  ['shift','Z','X','C','V','B','N','M','<','>','?','shift right'],
+  ['lang', 'control','option','command','space','command','option','←','↓','→'],
+  ['↑'],
 ];
 
 const buttonContentRuDownCase = 
@@ -41,8 +44,18 @@ const buttonContentRuDownCase =
   ['`','1','2','3','4','5','6','7','8','9','0','-','=','delete'],
   ['tab','й','ц','у','к','е','н','г','ш','щ','з','х','ъ','\\'],
   ['caps lock','ф','ы','в','а','п','р','о','л','д','ж','э','enter'],
-  ['shift','я','ч','с','м','и','т','ь','б','ю','.','▲','shift right'],
-  ['control','option','command','space','command','option','◄','▼','►']
+  ['shift','я','ч','с','м','и','т','ь','б','ю','.','↑','shift right'],
+  ['lang', 'control','option','command','space','command','option','←','↓','→']
+];
+
+const buttonContentRuUpperCase = 
+
+[ 
+  ['`','1','2','3','4','5','6','7','8','9','0','-','=','delete'],
+  ['tab','Й','Ц','У','К','Е','Н','Г','Ш','Щ','З','Х','Ъ','\\'],
+  ['caps lock','Ф','Ы','В','А','П','Р','О','Л','Д','Ж','Э','enter'],
+  ['shift','Я','Ч','С','М','И','Т','Ь','Б','Ю','.','↑','shift right'],
+  ['lang', 'control','option','command','space','command','option','←','↓','→']
 ];
 
 const keyCode =
@@ -51,8 +64,9 @@ const keyCode =
   ['Backquote','Digit1','Digit2','Digit3','Digit4','Digit5','Digit6','Digit7','Digit8','Digit9','Digit0','Minus','Equal','Backspace'],
   ['Tab','KeyQ','KeyW','KeyE','KeyR','KeyT','KeyY','KeyU','KeyI','KeyO','KeyP','BracketLeft','BracketRight','Backslash'],
   ['CapsLock','KeyA','KeyS','KeyD','KeyF','KeyG','KeyH','KeyJ','KeyK','KeyL','Semicolon','Quote','Enter'],
-  ['ShiftLeft','KeyZ','KeyX','KeyC','KeyV','KeyB','KeyN','KeyM','Comma','Period','Slash', 'ArrowUp', 'ShiftRight'],
-  ['ControlLeft','AltLeft','MetaLeft','Space','MetaRight','AltRight','ArrowLeft','ArrowDown','ArrowRight'] 
+  ['ShiftLeft','KeyZ','KeyX','KeyC','KeyV','KeyB','KeyN','KeyM','Comma','Period','Slash', 'ShiftRight'],
+  ['lang', 'ControlLeft','AltLeft','MetaLeft','Space','MetaRight','AltRight','ArrowLeft','ArrowDown','ArrowRight'],
+  ['ArrowUp']
 ];
 
 function drowKeyBoard(buttonContentEnDownCase, keyCode){
@@ -64,7 +78,7 @@ function drowKeyBoard(buttonContentEnDownCase, keyCode){
     row.classList.add('row', `row${indexRow}`)
     
     elems.forEach(function(elem, indexElem){
-      let btn = document.createElement('div');
+      let btn = document.createElement('button');
       let code = keyCode[indexRow][indexElem];
       btn.classList.add('button', `button${indexElem}`, code)
       btn.textContent = elem;
