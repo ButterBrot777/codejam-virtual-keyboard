@@ -1,0 +1,31 @@
+{
+  "name": "codejam-virtual-keyboard",
+  "version": "1.0.0",
+  "description": "RSS Virtual Keyboard",
+  "main": "script.js",
+  "dependencies": {
+    "eslint": "^6.8.0"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^2.0.4"
+  },
+  "scripts": {
+    "lint": "eslint ./codejam-virtual-keyboard",
+    "lint:fix": "eslint ./codejam-virtual-keyboard --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ButterBrot777/codejam-virtual-keyboard.git"
+  },
+  "author": "Pavel Karenda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ButterBrot777/codejam-virtual-keyboard/issues"
+  },
+  "homepage": "https://github.com/ButterBrot777/codejam-virtual-keyboard#readme"
+}
