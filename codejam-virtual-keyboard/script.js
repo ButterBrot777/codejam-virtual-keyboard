@@ -1,7 +1,7 @@
-const wrapper = document.createElement('div');
-      keyboard = document.createElement('div');
-      row = document.createElement('div');
-      botton = document.createElement('button');
+const wrapper = document.createElement('div'),
+      keyboard = document.createElement('div'),
+      row = document.createElement('div'),
+      botton = document.createElement('button'),
       textArea = document.createElement('textarea');
 
 let language = {
@@ -92,9 +92,7 @@ function drowKeyBoard(keyboardType){
       btn.textContent = elem;
     
       row.appendChild(btn)
-  
     })
-  
     keyboard.appendChild(row)
   })
 }
@@ -102,40 +100,33 @@ drowKeyBoard(buttonContentEnDownCase, keyCode)
 
 function localStorageHandler() {
   currentLanguage = localStorage.language
-  console.log('currentLanguage: ', currentLanguage)
   if( currentLanguage === 'en' ) drowKeyBoard(buttonContentEnDownCase, keyCode);
   if( currentLanguage === 'ru' ) drowKeyBoard(buttonContentRuDownCase, keyCode);
 }
 
 function languageHandler(language) {
-  console.log('before all', language, language.lang)
   if (language.lang === 'en') {
     drowKeyBoard(buttonContentRuDownCase, keyCode);
     language.lang = 'ru';
     localStorage.setItem('language', 'ru');
-    console.log('in langHandler first: ', localStorage.language)
   } else {
     drowKeyBoard(buttonContentEnDownCase, keyCode);
     language.lang = 'en';
     localStorage.setItem('language', 'en');
-    console.log('in langHandler second: ', localStorage.language)
   }
 }
 
-function shiftHandler(language, keyboardRu, keyboardEn, keyCode) {
+function shiftHandler(keyboardRu, keyboardEn, keyCode) {
   currentLanguage = localStorage.language
-  console.log('currentLanguage: ', currentLanguage)
   if( currentLanguage === 'en' ) drowKeyBoard(keyboardEn, keyCode);
   if( currentLanguage === 'ru' ) drowKeyBoard(keyboardRu, keyCode);
 
 }
 
 // switch language by option+space(iOS) of alt+space(Windows)
-console.log('language default: ', language.lang)
 document.addEventListener('keydown', function(event) {
   if (event.code == 'Space' && (event.ctrlKey || event.altKey)) {
     languageHandler(language);
-    // event.preventDefault();
   }
 });
 
@@ -143,9 +134,9 @@ document.addEventListener('keydown', function(event){
   let button = document.getElementsByClassName(event.code)[0]
   button.classList.add('active')
   
-  if (button.classList.contains('ShiftLeft' || 'ShiftRight')) {
-    console.log('must be printed: ')
-    shiftHandler(language, buttonContentRuUpperCase, buttonContentEnUpperCase, keyCode);
+  if (button.classList.contains('ShiftLeft') || button.classList.contains('ShiftRight')) {
+    // console.log('must be printed: ')
+    shiftHandler(buttonContentRuUpperCase, buttonContentEnUpperCase, keyCode);
     button.classList.add('active')
   }
 })
@@ -154,61 +145,53 @@ document.addEventListener('keyup', function(event){
   let button = document.getElementsByClassName(event.code)[0]
   button.classList.remove('active')
   
-  if (button.classList.contains('ShiftLeft')) {
-    shiftHandler(language, buttonContentRuDownCase, buttonContentEnDownCase, keyCode);
+  if (button.classList.contains('ShiftLeft') || button.classList.contains('ShiftRight')) {
+    shiftHandler(buttonContentRuDownCase, buttonContentEnDownCase, keyCode);
   }
 })
 
-
-
-
-console.log('locstor: ', localStorage.getItem('language'))
-
-// localStorage
+// localStorage on reloading page
 window.addEventListener('DOMContentLoaded', () => {
-  console.log('in DOMContentLoaded: ', localStorage.getItem('language'))
-  // languageHandler(localStorage.getItem('language'));
-  // console.log('afger reboot: ', localStorageHandler() )
   localStorageHandler();
   language.lang = localStorage.getItem('language');
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //mouse ivents
 keyboard.addEventListener('click', function(event){
-  // console.log(event)
-  // console.log(event.target)
-
   let target = event.target
   if(target.classList.contains('button')) {
     if(!target.classList.contains('Tab'))
+    if(!target.classList.contains('CapsLock'))
     if(!target.classList.contains('Enter'))
     if(!target.classList.contains('Space'))
     if(!target.classList.contains('MetaLeft'))
     if(!target.classList.contains('MetaRight'))
     if(!target.classList.contains('MetaRight'))
     if(!target.classList.contains('Backspace'))
+    if(!target.classList.contains('ShiftLeft'))
+    if(!target.classList.contains('ShiftRight'))
+    if(!target.classList.contains('AltLeft'))
+    if(!target.classList.contains('AltRight'))
+    if(!target.classList.contains('ControlLeft'))
+    if(!target.classList.contains('lang'))
 
     textArea.value += target.textContent;
 
     target.classList.add('button:active')
   }
 
-  if(target.classList.contains('Backspace')) {
-    textArea.value.splice(0, -1);
+  if( target.classList.contains('Backspace') ) {
+    let startPos = textArea.selectionStart;
+    let endPos = textArea.selectionEnd;
+    if (startPos === 0 && endPos === 0) {
+      textArea.focus();
+    } else {
+      textArea.value = textArea.value.substring(0, startPos - 1)
+        + textArea.value.substring(endPos, textArea.value.length);
+      textArea.selectionStart = startPos - 1;
+      textArea.selectionEnd = endPos - 1;
+      textArea.focus();
+    }
   }
 
   if(target.classList.contains('Tab')) {
@@ -221,6 +204,10 @@ keyboard.addEventListener('click', function(event){
 
   if(target.classList.contains('Enter')) {
     textArea.value += '\n';
+  }
+
+  if( target.classList.contains('lang') ) {
+    languageHandler(language);
   }
 
   textArea.focus();
