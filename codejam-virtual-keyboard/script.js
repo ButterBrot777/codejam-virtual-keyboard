@@ -4,6 +4,11 @@ const wrapper = document.createElement('div');
       botton = document.createElement('button');
       textArea = document.createElement('textarea');
 
+let language = {
+  lang : 'en',
+}
+
+// create page
 wrapper.classList.add('wrapper');
 document.body.appendChild(wrapper);
 
@@ -13,7 +18,7 @@ wrapper.appendChild(textArea);
 keyboard.classList.add('keyboard');
 wrapper.appendChild(keyboard);
 
-// alert('Hello World');
+// keyboard sets
 
 const buttonContentEnDownCase = 
 
@@ -44,8 +49,9 @@ const buttonContentRuDownCase =
   ['`','1','2','3','4','5','6','7','8','9','0','-','=','delete'],
   ['tab','й','ц','у','к','е','н','г','ш','щ','з','х','ъ','\\'],
   ['caps lock','ф','ы','в','а','п','р','о','л','д','ж','э','enter'],
-  ['shift','я','ч','с','м','и','т','ь','б','ю','.','↑','shift right'],
-  ['lang', 'control','option','command','space','command','option','←','↓','→']
+  ['shift','я','ч','с','м','и','т','ь','б','ю','.','shift right'],
+  ['lang', 'control','option','command','space','command','option','←','↓','→'],
+  ['↑'],
 ];
 
 const buttonContentRuUpperCase = 
@@ -54,8 +60,9 @@ const buttonContentRuUpperCase =
   ['`','1','2','3','4','5','6','7','8','9','0','-','=','delete'],
   ['tab','Й','Ц','У','К','Е','Н','Г','Ш','Щ','З','Х','Ъ','\\'],
   ['caps lock','Ф','Ы','В','А','П','Р','О','Л','Д','Ж','Э','enter'],
-  ['shift','Я','Ч','С','М','И','Т','Ь','Б','Ю','.','↑','shift right'],
-  ['lang', 'control','option','command','space','command','option','←','↓','→']
+  ['shift','Я','Ч','С','М','И','Т','Ь','Б','Ю','.','shift right'],
+  ['lang', 'control','option','command','space','command','option','←','↓','→'],
+  ['↑'],
 ];
 
 const keyCode =
@@ -69,10 +76,11 @@ const keyCode =
   ['ArrowUp']
 ];
 
-function drowKeyBoard(buttonContentEnDownCase, keyCode){
+// drow keyboard
+function drowKeyBoard(keyboardType){
   keyboard.innerHTML = ""
   
-  buttonContentEnDownCase.forEach(function(elems, indexRow){
+  keyboardType.forEach(function(elems, indexRow){
   
     let row = document.createElement('div');
     row.classList.add('row', `row${indexRow}`)
@@ -89,10 +97,95 @@ function drowKeyBoard(buttonContentEnDownCase, keyCode){
   
     keyboard.appendChild(row)
   })
+}
+drowKeyBoard(buttonContentEnDownCase, keyCode)
+
+function localStorageHandler() {
+  currentLanguage = localStorage.language
+  console.log('currentLanguage: ', currentLanguage)
+  if( currentLanguage === 'en' ) drowKeyBoard(buttonContentEnDownCase, keyCode);
+  if( currentLanguage === 'ru' ) drowKeyBoard(buttonContentRuDownCase, keyCode);
+}
+
+function languageHandler(language) {
+  console.log('before all', language, language.lang)
+  if (language.lang === 'en') {
+    drowKeyBoard(buttonContentRuDownCase, keyCode);
+    language.lang = 'ru';
+    localStorage.setItem('language', 'ru');
+    console.log('in langHandler first: ', localStorage.language)
+  } else {
+    drowKeyBoard(buttonContentEnDownCase, keyCode);
+    language.lang = 'en';
+    localStorage.setItem('language', 'en');
+    console.log('in langHandler second: ', localStorage.language)
+  }
+}
+
+function shiftHandler(language, keyboardRu, keyboardEn, keyCode) {
+  currentLanguage = localStorage.language
+  console.log('currentLanguage: ', currentLanguage)
+  if( currentLanguage === 'en' ) drowKeyBoard(keyboardEn, keyCode);
+  if( currentLanguage === 'ru' ) drowKeyBoard(keyboardRu, keyCode);
 
 }
 
-drowKeyBoard(buttonContentEnDownCase, keyCode)
+// switch language by option+space(iOS) of alt+space(Windows)
+console.log('language default: ', language.lang)
+document.addEventListener('keydown', function(event) {
+  if (event.code == 'Space' && (event.ctrlKey || event.altKey)) {
+    languageHandler(language);
+    // event.preventDefault();
+  }
+});
+
+document.addEventListener('keydown', function(event){
+  let button = document.getElementsByClassName(event.code)[0]
+  button.classList.add('active')
+  
+  if (button.classList.contains('ShiftLeft' || 'ShiftRight')) {
+    console.log('must be printed: ')
+    shiftHandler(language, buttonContentRuUpperCase, buttonContentEnUpperCase, keyCode);
+    button.classList.add('active')
+  }
+})
+
+document.addEventListener('keyup', function(event){
+  let button = document.getElementsByClassName(event.code)[0]
+  button.classList.remove('active')
+  
+  if (button.classList.contains('ShiftLeft')) {
+    shiftHandler(language, buttonContentRuDownCase, buttonContentEnDownCase, keyCode);
+  }
+})
+
+
+
+
+console.log('locstor: ', localStorage.getItem('language'))
+
+// localStorage
+window.addEventListener('DOMContentLoaded', () => {
+  console.log('in DOMContentLoaded: ', localStorage.getItem('language'))
+  // languageHandler(localStorage.getItem('language'));
+  // console.log('afger reboot: ', localStorageHandler() )
+  localStorageHandler();
+  language.lang = localStorage.getItem('language');
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //mouse ivents
 keyboard.addEventListener('click', function(event){
@@ -108,8 +201,6 @@ keyboard.addEventListener('click', function(event){
     if(!target.classList.contains('MetaRight'))
     if(!target.classList.contains('MetaRight'))
     if(!target.classList.contains('Backspace'))
-
-
 
     textArea.value += target.textContent;
 
@@ -135,26 +226,3 @@ keyboard.addEventListener('click', function(event){
   textArea.focus();
 
 })
-
-document.addEventListener('keydown', function(event){
-  // console.log(event)
-  // console.log(event.code)
-  let button = document.getElementsByClassName(event.code)[0]
-  button.classList.add('black')
-
-  if (button.classList.contains('ShiftLeft')) {
-    drowKeyBoard(buttonContentEnUpperCase, keyCode)
-  }
-})
-
-document.addEventListener('keyup', function(event){
-  // console.log(event)
-  // console.log(event.code)
-  let button = document.getElementsByClassName(event.code)[0]
-  button.classList.remove('black')
-  if (button.classList.contains('ShiftLeft')) {
-    drowKeyBoard(buttonContentEnDownCase, keyCode)
-  }
-})
-
-//localStorage??
