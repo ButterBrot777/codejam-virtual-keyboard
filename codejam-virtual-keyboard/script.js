@@ -9,6 +9,8 @@ const language = {
   lang: 'en',
 };
 
+let isShifted = false;
+
 // create page
 wrapper.classList.add('wrapper');
 document.body.appendChild(wrapper);
@@ -134,6 +136,18 @@ document.addEventListener('keydown', (event) => {
     shiftHandler(buttonContentRuUpperCase, buttonContentEnUpperCase, keyCode);
     button.classList.add('active');
   }
+
+  if (button.classList.contains('CapsLock')) {
+    button.classList.toggle('active');
+    event.preventDefault();
+    if (isShifted) {
+      shiftHandler(buttonContentRuDownCase, buttonContentEnDownCase);
+      isShifted = false;
+    } else {
+      shiftHandler(buttonContentRuUpperCase, buttonContentEnUpperCase);
+      isShifted = true;
+    }
+  }
 });
 
 document.addEventListener('keyup', (event) => {
@@ -144,6 +158,11 @@ document.addEventListener('keyup', (event) => {
     shiftHandler(buttonContentRuDownCase, buttonContentEnDownCase, keyCode);
   }
 });
+
+// document.addEventListener('keypress', event => {
+//   const capsLock = document.getElementsByClassName('CapsLock');
+//   console.log('caps was pressed')
+// })
 
 // localStorage on reloading page
 window.addEventListener('DOMContentLoaded', () => {
@@ -157,7 +176,7 @@ keyboard.addEventListener('click', (event) => {
   if (target.classList.contains('button')) {
     if (!target.classList.contains('Tab')) if (!target.classList.contains('CapsLock')) if (!target.classList.contains('Enter')) if (!target.classList.contains('Space')) if (!target.classList.contains('MetaLeft')) if (!target.classList.contains('MetaRight')) if (!target.classList.contains('MetaRight')) if (!target.classList.contains('Backspace')) if (!target.classList.contains('ShiftLeft')) if (!target.classList.contains('ShiftRight')) if (!target.classList.contains('AltLeft')) if (!target.classList.contains('AltRight')) if (!target.classList.contains('ControlLeft')) if (!target.classList.contains('lang')) textArea.value += target.textContent;
 
-    target.classList.add('button:active');
+    // target.classList.add('button:active');
   }
 
   if (target.classList.contains('Backspace')) {
@@ -197,6 +216,16 @@ keyboard.addEventListener('click', (event) => {
 
   if (target.classList.contains('lang')) {
     languageHandler(language);
+  }
+
+  if (target.classList.contains('ShiftLeft') || target.classList.contains('ShiftRight')) {
+    if (isShifted) {
+      shiftHandler(buttonContentRuDownCase, buttonContentEnDownCase);
+      isShifted = false;
+    } else {
+      shiftHandler(buttonContentRuUpperCase, buttonContentEnUpperCase);
+      isShifted = true;
+    }
   }
 
   textArea.focus();
