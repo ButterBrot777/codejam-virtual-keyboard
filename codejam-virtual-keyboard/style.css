@@ -1,18 +1,21 @@
 .wrapper {
-  max-width: 1300px;
+  max-width: 1200px;
   margin: 0 auto;
 
   text-align: center;
-  vertical-align: middle;
+  /* vertical-align: middle; */
 }
 
 .keyboard {
+  display: flex;
+  flex-wrap: wrap;
   margin-top: 30px;
-  width: 1050px;
-  height: 380px;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
   background: #ffe680;
   border: 1px solid black;
-  display: inline-block;
+  position: relative;
 
   -webkit-box-shadow: 0px 10px 35px 0px rgba(48,54,156,1);
   -moz-box-shadow: 0px 10px 35px 0px rgba(48,54,156,1);
@@ -22,7 +25,7 @@
 .text-area {
   font-size: 18px;
   width: 700px;
-  height: 400px;
+  height: 100px;
   background: #e6fff2;
   /* text-align: center; */
   resize: none;
@@ -34,25 +37,68 @@
   box-shadow: inset 0px 10px 30px 0px rgba(0,0,0,0.55);
 }
 
-.row4 .button3 {
-  width: 166px;
-}
-
 .row {
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: stretch;
 }
 
 .button {
-  min-width: 40px;
-  height: 40px;
+  font-size: 16px;
+  width: 65px;
+  height: 65px;
   padding: 10px;
   margin: 3px;
   border: 1px solid black;
   display: inline-block;
   background: gray;
   border-radius: 5px;
+  -webkit-user-select: none;
+  outline: none;
+}
+
+.row5 {
+  width: fit-content;
+  position: absolute;
+  right: 13%;
+  top: 77%;
+}
+.row5 .ArrowUp {
+  width: 65px;
+  height: 30px;
+}
+.row .ArrowDown {
+  height: 30px;
+  margin-top: 38px;
+}
+
+.row4 .Space {
+  width: 333px;
+}
+.row .Backspace {
+  width: 100px;
+}
+.row .Tab {
+  width: 100px;
+}
+.row .CapsLock {
+  width: 118px;
+}
+.row .Enter {
+  width: 118px;
+}
+.row .ShiftLeft {
+  width: 153px;
+}
+.row .ShiftRight {
+  width: 153px;
+}
+.row .MetaLeft {
+  width: 90px;
+}
+.row .MetaRight {
+  width: 90px;
 }
 
 @font-face {
@@ -61,18 +107,35 @@
   font-weight: normal;
   src: local('Lucida Sans'), url('../assets/fonts/LucidaSans.woff'), format('woff');
 }
-.black{
-  background-color: rgba(255, 0, 0, 0.6);;
-  opacity: 50%;
+.active {
+  background-color: rgba(255, 0, 0, 0.6);
+  
+  /* opacity: 50%; */
 }
 
 .button:active {
   background-color: rgba(255, 0, 0, 0.6);;
-  opacity: 50%;
-  transform: scale(2, 2);
-  transition: 0.3s ease;
+  opacity: 70%;
+  transform: scale(0.9, 0.9);
+  /* animation-direction: alternate; */
+  /* transition: 0.3s ease-in-out; */
 }
 
 * {
   font-family: 'Lucida Sans', Tahoma, sans-serif;
+}
+
+.user-information {
+  font-size: 16px;
+  text-align: center;
+  padding-top: 20px;
+}
+
+.user-information p {
+  margin: 0;
+  padding: 0;
+}
+
+.capsLocked {
+  text-transform: uppercase;
 }
